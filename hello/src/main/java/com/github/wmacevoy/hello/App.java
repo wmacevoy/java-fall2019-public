@@ -14,7 +14,7 @@ public class App {
     private String language = "en";
     
     void setLanguage(String language) {
-        if (language.equals("en") || language.equals("en")) {
+        if (language.equals("en") || language.equals("cn")) {
             this.language = language;
         } else {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -23,7 +23,7 @@ public class App {
 
     String getMessage() {
         switch(language) {
-            case "en": return "Hello WOrld!";
+            case "en": return "Hello World!";
             case "cn": return "你好，世界!";
             
         }
