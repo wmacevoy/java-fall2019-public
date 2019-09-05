@@ -11,13 +11,23 @@ package com.github.wmacevoy.hello;
  */
 public class App {
     void run() {}
-
-    void setLanguage(String en) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private String language = "en";
+    
+    void setLanguage(String language) {
+        if (language.equals("en") || language.equals("en")) {
+            this.language = language;
+        } else {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     String getMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(language) {
+            case "en": return "Hello WOrld!";
+            case "cn": return "你好，世界!";
+            
+        }
+        throw new IllegalStateException("inconceivable!");
     }
     
 }
