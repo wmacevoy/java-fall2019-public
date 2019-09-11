@@ -13,8 +13,8 @@ import java.util.Scanner;
  * @author wmacevoy
  */
 public class App {
-    Scanner in;
-    PrintStream out;
+    Scanner in = new Scanner(System.in);
+    PrintStream out = System.out;
     int a,b,s,n,m;
     double A,velocity;
     
@@ -24,15 +24,12 @@ public class App {
     }
 
     void run() {
-        in = new Scanner(System.in);
-        out = System.out;
         while (true) {
             read();
             if (finished()) break;
             solve();
             write();
         }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     void read() {
