@@ -63,7 +63,7 @@ public class AppTest {
             case 3:
                 return ex3();
         }
-        throw new IllegalStateException("inconceivable");
+        throw new IndexOutOfBoundsException("k=" + k);
     }
 
     void assertAppInEquals(App expect, App result) {
@@ -150,19 +150,19 @@ public class AppTest {
     @Test
     public void testRun() {
         App app = new App();
-        app.in = new Scanner("100 100 1 1 1\n"
-                + "200 100 5 3 4\n"
-                + "201 132 48 1900 156\n"
-                + "0 0 0 0 0");
+        String EOL = System.lineSeparator();
+        app.in = new Scanner("100 100 1 1 1" + EOL
+                + "200 100 5 3 4" + EOL
+                + "201 132 48 1900 156" + EOL
+                + "0 0 0 0 0" + EOL);
         var bos = new ByteArrayOutputStream();
         app.out = new PrintStream(bos);
         app.run();
         app.out.close();
-        String EOL = System.lineSeparator();
         String expect = "45.00 141.42" + EOL
                 + "33.69 144.22" + EOL
                 + "3.09 7967.81" + EOL;
         String result = bos.toString();
-        assertEquals(expect,result);
+        assertEquals(expect, result);
     }
 }
