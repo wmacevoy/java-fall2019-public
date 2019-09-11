@@ -82,9 +82,9 @@ public class AppTest {
     public void testSample(int testcase) {
         App tested = ex(testcase);
         App result = ex(testcase);
-        tested.A = 0;
-        tested.velocity = 0;
-        tested.solve();
+        result.A = 0;
+        result.velocity = 0;
+        result.solve();
         assertAppOutEquals(result, tested, 0.01);
     }
 
