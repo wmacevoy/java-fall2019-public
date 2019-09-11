@@ -109,9 +109,9 @@ public class AppTest {
         App result = new App();
         result.in = new Scanner("201 132 48 1900 156");
         result.read();
-        assertAppInEquals(expect,result);
+        assertAppInEquals(expect, result);
     }
-    
+
     @Test
     public void testWrite3() {
         String expect = "3.09 7967.81" + System.lineSeparator();
@@ -123,8 +123,9 @@ public class AppTest {
         app.write();
         app.out.close();
         String result = bos.toString();
-        assertEquals(expect,result);
+        assertEquals(expect, result);
     }
+
     /**
      * Test of finished method, of class App.
      */
@@ -144,5 +145,24 @@ public class AppTest {
         app.n = 0;
         app.m = 0;
         assertTrue(app.finished());
+    }
+
+    @Test
+    public void testRun() {
+        App app = new App();
+        app.in = new Scanner("100 100 1 1 1\n"
+                + "200 100 5 3 4\n"
+                + "201 132 48 1900 156\n"
+                + "0 0 0 0 0");
+        var bos = new ByteArrayOutputStream();
+        app.out = new PrintStream(bos);
+        app.run();
+        app.out.close();
+        String EOL = System.lineSeparator();
+        String expect = "45.00 141.42" + EOL
+                + "33.69 144.22" + EOL
+                + "3.09 7967.81" + EOL;
+        String result = bos.toString();
+        assertEquals(expect,result);
     }
 }
