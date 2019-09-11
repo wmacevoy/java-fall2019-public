@@ -41,7 +41,7 @@ public class App {
     }
     
     void write() {
-        out.printf("%1.2f %1.2f\n", A, velocity);
+        out.printf("%1.2f %1.2f%n", A, velocity);
     }
 
     boolean finished() {
