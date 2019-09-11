@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * tested solution to:
+ *  https://open.kattis.com/problems/billiard
+ 
  */
 package com.github.wmacevoy.billiard;
 
@@ -23,7 +23,7 @@ public class App {
         app.run();
     }
 
-    private void run() {
+    void run() {
         in = new Scanner(System.in);
         out = System.out;
         while (true) {
@@ -35,20 +35,24 @@ public class App {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void read() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private boolean finished() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void solve() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void write() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void read() {
+        a = in.nextInt();
+        b = in.nextInt();
+        s = in.nextInt();
+        m = in.nextInt();
+        n = in.nextInt();
     }
     
+    void write() {
+        out.printf("%1.2f %1.2f\n", A, velocity);
+    }
+
+    boolean finished() {
+        return (a == 0 && b == 0 && s == 0 && m == 0 && n == 0);
+    }
+
+    void solve() {
+        A = Math.toDegrees(Math.atan2(n*b,m*a));
+        velocity = Math.sqrt(Math.pow(n*b,2)+Math.pow(m*a,2))/s;
+    }
 }
