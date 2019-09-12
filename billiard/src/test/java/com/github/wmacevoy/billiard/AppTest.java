@@ -53,6 +53,19 @@ public class AppTest {
         app.velocity = 7967.81;
         return app;
     }
+    
+    App ex4() {
+        App app = new App();
+        app.a = 10_000;
+        app.b = 10_000;
+        app.s = 10_000;
+        app.m = 10_000;
+        app.n = 10_000;
+        app.A = 45.00;
+        app.velocity = Math.sqrt(2.0)*10_000;
+        return app;
+        
+    }
 
     App ex(int k) {
         switch (k) {
@@ -62,6 +75,8 @@ public class AppTest {
                 return ex2();
             case 3:
                 return ex3();
+            case 4:
+                return ex4();
         }
         throw new IndexOutOfBoundsException("k=" + k);
     }
@@ -80,12 +95,12 @@ public class AppTest {
     }
 
     public void testSample(int testcase) {
-        App tested = ex(testcase);
+        App expected = ex(testcase);
         App result = ex(testcase);
         result.A = 0;
         result.velocity = 0;
         result.solve();
-        assertAppOutEquals(result, tested, 0.01);
+        assertAppOutEquals(expected, result, 0.01);
     }
 
     @Test
@@ -103,6 +118,10 @@ public class AppTest {
         testSample(3);
     }
 
+    @Test
+    public void testSample4() {
+        testSample(4);
+    }
     @Test
     public void testRead3() {
         App expect = ex3();
@@ -130,7 +149,7 @@ public class AppTest {
      * Test of finished method, of class App.
      */
     @Test
-    public void testNotFinished1() {
+    public void testNotFinished() {
         App app = ex1();
         app.a = 33;
         assertFalse(app.finished());
@@ -150,6 +169,7 @@ public class AppTest {
     @Test
     public void testRun() {
         App app = new App();
+        
         String EOL = System.lineSeparator();
         app.in = new Scanner("100 100 1 1 1" + EOL
                 + "200 100 5 3 4" + EOL

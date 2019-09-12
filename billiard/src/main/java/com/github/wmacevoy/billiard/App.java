@@ -50,6 +50,6 @@ public class App {
 
     void solve() {
         A = Math.toDegrees(Math.atan2(n*b,m*a));
-        velocity = Math.sqrt(Math.pow(n*b,2)+Math.pow(m*a,2))/s;
+        velocity = Math.sqrt(Math.pow(n*b,2)+Math.pow(m*a,2))/((double)s);
     }
 }
