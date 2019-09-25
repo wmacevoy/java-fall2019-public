@@ -5,6 +5,8 @@
  */
 package com.github.wmacevoy.billiard;
 
+import java.lang.*;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -17,6 +19,8 @@ public class App {
     PrintStream out = System.out;
     int a,b,s,n,m;
     double A,velocity;
+    
+    public static final int MAX_VALUE = 10_000;
     
     public static void main(String[] args) throws Exception {
         App app = new App();
@@ -47,9 +51,17 @@ public class App {
     boolean finished() {
         return (a == 0 && b == 0 && s == 0 && m == 0 && n == 0);
     }
-
+    
+    double getA() {
+        return Math.toDegrees(Math.atan2(n*b,m*a));
+    }
+    
+    double getVelocity() {
+         return Math.sqrt(Math.pow(n*b,2)+Math.pow(m*a,2))/((double)s);
+    }
+    
     void solve() {
-        A = Math.toDegrees(Math.atan2(n*b,m*a));
-        velocity = Math.sqrt(Math.pow(n*b,2)+Math.pow(m*a,2))/((double)s);
+        A = getA();
+        velocity = getVelocity();
     }
 }
