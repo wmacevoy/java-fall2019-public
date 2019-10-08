@@ -6,6 +6,8 @@
 package com.github.wmacevoy.threads;
 
 import org.junit.*;
+import java.time.Instant;
+import java.time.Duration;
 import static org.junit.Assert.*;
 
 /**
@@ -13,32 +15,31 @@ import static org.junit.Assert.*;
  * @author wmacevoy
  */
 public class IntegrateTest {
-    
+
+    static Integrate getI() {
+        var I = new Integrate();
+        I.a = 0;
+        I.b = Math.PI / 2;
+        I.n = 100;
+        return I;
+    }
+
     static double exact(double a, double b) {
         return Math.cos(a) - Math.cos(b);
     }
-    
-    
-    
-    public IntegrateTest() {
-    }
-    
 
     /**
      * Test of slice method, of class Integrate.
      */
     @Test
     public void testSlice() {
-        System.out.println("slice");
+        System.out.println("slice(i)");
+        var I = getI();
         int i = 23;
-        Integrate I = new Integrate();
-        I.a = 0;
-        I.b = Math.PI/2;
-        I.n = 100;
-        double x0=(I.a+(I.b-I.a)*i)/((double) I.n);
-        double x1=(I.a+(I.b-I.a)*(i+1))/((double) I.n);
+        double x0 = I.x(i);
+        double x1 = I.x(i + 1);
         double bit = I.slice(i);
-        double exactBit = exact(x0,x1);
+        double exactBit = exact(x0, x1);
         assertEquals(exactBit, bit, 0.001);
     }
 
@@ -47,12 +48,9 @@ public class IntegrateTest {
      */
     @Test
     public void testEval_0args() {
-        System.out.println("eval");
-        Integrate I = new Integrate();
-        I.a = 0;
-        I.b = Math.PI;
-        I.n = 100;
-        double expResult = 2.0;
+        System.out.println("eval()");
+        var I = getI();
+        double expResult = exact(I.a, I.b);
         double result = I.eval();
         assertEquals(expResult, result, 0.001);
     }
@@ -62,15 +60,15 @@ public class IntegrateTest {
      */
     @Test
     public void testEval_int_int() {
-        System.out.println("eval");
-        int i0 = 0;
-        int i1 = 0;
-        Integrate instance = new Integrate();
-        double expResult = 0.0;
-        double result = instance.eval(i0, i1);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("eval(i0,i1)");
+        int i0 = 23;
+        int i1 = 87;
+        var I = getI();
+        double x0 = I.x(i0);
+        double x1 = I.x(i1);
+        double expResult = exact(x0, x1);
+        double result = I.eval(i0, i1);
+        assertEquals(expResult, result, 0.001);
     }
 
     /**
@@ -78,15 +76,10 @@ public class IntegrateTest {
      */
     @Test
     public void testParallelEval_int() {
-        System.out.println("parallelEval");
+        System.out.println("parallelEval(threads)");
         int threads = 8;
-        Integrate I = new Integrate();
-        I.a = 0;
-        I.b = Math.PI;
-        I.n = 100;
-        double expResult = 2.0;
-
-       
+        var I = getI();
+        double expResult = exact(I.a, I.b);
         double result = I.parallelEval(threads);
         assertEquals(expResult, result, 0.001);
     }
@@ -96,13 +89,36 @@ public class IntegrateTest {
      */
     @Test
     public void testParallelEval_0args() {
-        System.out.println("parallelEval");
-        Integrate instance = new Integrate();
-        double expResult = 0.0;
-        double result = instance.parallelEval();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("parallelEval()");
+        var I = getI();
+        double expResult = exact(I.a, I.b);
+        double result = I.parallelEval();
+        assertEquals(expResult, result, 0.001);
     }
-    
+
+    double timed(Integrate I, boolean parallel) {
+        Instant t0 = Instant.now();
+        double result = parallel ? I.parallelEval() : I.eval();
+        Instant t1 = Instant.now();
+        double exact = exact(I.a, I.b);
+        assertEquals(exact, result, 0.001);
+        double duration = Duration.between(t0, t1).toMillis() * 0.001;
+        return duration;
+    }
+
+    @Test
+    public void testSpeedup() {
+        Integrate I = new Integrate();
+        I.a = 0;
+        I.b = Math.PI / 2;
+        I.n = 100_000_000;
+
+        double duration = timed(I, false);
+        double parallelDuration = timed(I, true);
+        double ratio = parallelDuration / duration;
+        double perfect = 1.0/Runtime.getRuntime().availableProcessors();
+        assertTrue(ratio < 0.66);
+        System.out.println("duration = " + duration + " parallelDuration = " + parallelDuration + " ratio = " + ratio + " perfect = " + perfect);
+    }
+
 }

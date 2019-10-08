@@ -5,48 +5,36 @@
  */
 package com.github.wmacevoy.threads;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author wmacevoy
  */
 public class IntegrateJobTest {
-    
-    public IntegrateJobTest() {
+    static Integrate getI() { return IntegrateTest.getI(); }
+    static IntegrateJob getJob() {
+        var I = getI();
+        var job = new IntegrateJob(I,23,87);
+        return job;
     }
-    
-    @BeforeAll
-    public static void setUpClass() {
+    static double exact(IntegrateJob job) {
+        double x0 = job.problem.x(job.i0);
+        double x1 = job.problem.x(job.i1);
+        double area = IntegrateTest.exact(x0,x1);
+        return area;
     }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
-
     /**
      * Test of run method, of class IntegrateJob.
      */
     @Test
     public void testRun() {
         System.out.println("run");
-        IntegrateJob instance = null;
-        instance.run();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        var job = getJob();
+        job.run();
+        double expect = exact(job);
+        assertEquals(expect,job.partialSum,0.001);
     }
     
 }
