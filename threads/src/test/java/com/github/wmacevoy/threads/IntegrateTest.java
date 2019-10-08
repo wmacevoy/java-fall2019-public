@@ -117,7 +117,7 @@ public class IntegrateTest {
         double parallelDuration = timed(I, true);
         double ratio = parallelDuration / duration;
         double perfect = 1.0/Runtime.getRuntime().availableProcessors();
-        assertTrue(ratio < 0.66);
+        assertTrue(ratio < 2*perfect);
         System.out.println("duration = " + duration + " parallelDuration = " + parallelDuration + " ratio = " + ratio + " perfect = " + perfect);
     }
 
