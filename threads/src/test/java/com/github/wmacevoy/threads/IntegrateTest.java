@@ -113,8 +113,8 @@ public class IntegrateTest {
         I.b = Math.PI / 2;
         I.n = 100_000_000;
 
-        double duration = timed(I, false);
-        double parallelDuration = timed(I, true);
+        double duration = timed(I, false); // one thread
+        double parallelDuration = timed(I, true); // cores*2 threads
         double ratio = parallelDuration / duration;
         double perfect = 1.0/Runtime.getRuntime().availableProcessors();
         assertTrue(ratio < 2*perfect);
