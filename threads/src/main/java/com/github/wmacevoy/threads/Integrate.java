@@ -8,12 +8,13 @@ package com.github.wmacevoy.threads;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 /**
  *
  * @author wmacevoy
  */
-class IntegrateJob extends Thread {
+class IntegrateJob {
 
     Integrate problem;
     int i0, i1;
@@ -25,9 +26,10 @@ class IntegrateJob extends Thread {
         this.i1 = i1;
     }
 
-    @Override
     public void run() {
         partialSum = problem.eval(i0, i1);
+        problem.addArea(partialSum);
+        //problem.setArea(problem.getArea()+partialSum); // not a transaction! - wrong
     }
 }
 
@@ -35,9 +37,29 @@ public class Integrate {
 
     double a, b;
     int n;
+    private Object areaLock = new Object();
+    private double area = 0;
+
+    double getArea() {
+        synchronized (areaLock) {
+            return area;
+        }
+    }
+
+    void setArea(double value) {
+        synchronized (areaLock) {
+            area = value;
+        }
+    }
 
     double f(double x) {
         return Math.sin(x);
+    }
+
+    void addArea(double delta) {
+        synchronized (areaLock) {
+            area += delta;
+        }
     }
 
     double x(double i) {
@@ -74,21 +96,8 @@ public class Integrate {
             int i1 = ((thread + 1) * n) / threads;
             jobs.add(new IntegrateJob(this, i0, i1));
         }
-        for (var job : jobs) {
-            job.start();
-        }
-        for (var job : jobs) {
-            try {
-                job.join();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Integrate.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        double sum = 0;
-        for (var job : jobs) {
-            sum += job.partialSum;
-        }
-        return sum;
+        jobs.parallelStream().forEach(job->job.run());
+        return getArea();
     }
 
     double parallelEval() {
@@ -96,5 +105,11 @@ public class Integrate {
         int threads = 2 * cores;
         double ans = parallelEval(threads);
         return ans;
+    }
+    
+    void streamExample() {
+        IntStream range = IntStream.rangeClosed(1, 10);
+        range.forEach(i -> System.out.println(i));
+
     }
 }
