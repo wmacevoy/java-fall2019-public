@@ -17,21 +17,39 @@ package com.github.wmacevoy.sqlite;
  */
 import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface DBI {
 
     Connection getConnection() throws SQLException;
 
-    PreparedStatement getPreparedStatement(String sql) throws SQLException;
+    default int getSqlStatementTimeoutSeconds() {
+        return 30;
+    }
 
-    Statement getStatement() throws SQLException;
+    default PreparedStatement getPreparedStatement(String sql) throws SQLException {
+        Connection connection = getConnection();
+        int keyMode = sql.startsWith("insert")
+                ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS;
+
+        PreparedStatement preparedStatement
+                = connection.prepareStatement(sql, keyMode);
+        preparedStatement.setQueryTimeout(getSqlStatementTimeoutSeconds());
+        return preparedStatement;
+
+    }
+
+    default Statement getStatement() throws SQLException {
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        statement.setQueryTimeout(getSqlStatementTimeoutSeconds());
+        return statement;
+
+    }
 
     default ResultSet sql(String sql, Object... objects) throws SQLException {
         PreparedStatement preparedStatement = getPreparedStatement(sql);
