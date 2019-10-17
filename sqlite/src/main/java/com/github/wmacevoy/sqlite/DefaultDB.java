@@ -19,7 +19,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DefaultDB implements DBI {
+public class DefaultDB extends Object implements DBI{
 
     private String url;
 
@@ -60,5 +60,15 @@ public class DefaultDB implements DBI {
             }
         }
         return connection;
+    }
+    
+    @Override
+    public void close() throws SQLException {
+        synchronized(this) {
+            if (connection != null) {
+                connection.close();
+                connection = null;
+            }
+        }
     }
 }

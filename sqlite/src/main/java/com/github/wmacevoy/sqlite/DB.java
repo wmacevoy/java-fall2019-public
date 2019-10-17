@@ -24,17 +24,15 @@ import java.util.logging.Logger;
 
 public class DB extends DefaultDB {
 
-    public static String DEFAULT_DB = "tests.db";
+    public static String DEFAULT_DB = "people.db";
     public static String DEFAULT_URL = "jdbc:sqlite:" + DEFAULT_DB;
-
-    public final String url;
 
     DB() {
         this(DEFAULT_URL);
     }
 
     DB(String url) {
-        this.url = url;
+        setURL(url);
     }
 
     void reset() throws SQLException {

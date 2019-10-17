@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public interface DBI {
+public interface DBI extends AutoCloseable {
 
     Connection getConnection() throws SQLException;
 
@@ -50,8 +50,12 @@ public interface DBI {
         return statement;
 
     }
+    
+    // db.sql("insert into mytable (height,weight) values (?,?)", 3,7);
 
     default ResultSet sql(String sql, Object... objects) throws SQLException {
+        // sql="insert...";
+        // objects = new Object[] { new Integer(3), new Integer(7) }
         PreparedStatement preparedStatement = getPreparedStatement(sql);
         int index = 1;
         for (Object object : objects) {
@@ -147,4 +151,6 @@ public interface DBI {
             throw new SQLException("missing result");
         }
     }
+    
+    void close() throws SQLException;
 }
