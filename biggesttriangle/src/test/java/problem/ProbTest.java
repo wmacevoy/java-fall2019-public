@@ -1,17 +1,15 @@
+package problem;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.wmacevoy.biggesttriangle;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import static com.github.wmacevoy.biggesttriangle.Assertions.*;
-import java.io.IOException;
+import static problem.Assertions.*;
+import org.junit.jupiter.api.*;
+import java.util.*;
+import java.io.*;
 
 /**
  *
@@ -158,7 +156,7 @@ public class ProbTest {
         PIO result = ex(k);
         result.prob.maxPerimeter = Double.NaN;
         result.prob.solve();
-        assertEquals(expect.prob.maxPerimeter, result.prob.maxPerimeter, 1e-9, () -> "k=" + k);
+        assertEquals(expect.prob.maxPerimeter, result.prob.maxPerimeter, TOLERANCE, () -> "k=" + k);
     }
 
     @Test
@@ -166,11 +164,6 @@ public class ProbTest {
         for (int k = 1; k <= N; ++k) {
             testSolve(k);
         }
-    }
-
-    @Test
-    public void testSolve3() {
-        testSolve(3);
     }
 
     void testRun(int k) {

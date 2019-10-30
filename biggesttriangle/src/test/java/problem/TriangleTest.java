@@ -1,12 +1,15 @@
+package problem;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.wmacevoy.biggesttriangle;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static problem.Assertions.*;
 
 /**
  *
@@ -24,7 +27,7 @@ public class TriangleTest {
         Triangle triangle = new Triangle(alpha,beta,gamma);
         double expResult = 3+4+5;
         double result = triangle.perimeter();
-        assertEquals(expResult, result, 1e-9);
+        assertEquals(expResult, result, TOLERANCE, EMPTY);
     }
     
 }

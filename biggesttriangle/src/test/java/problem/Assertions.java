@@ -1,11 +1,15 @@
+package problem;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.github.wmacevoy.biggesttriangle;
 
-import java.util.function.Supplier;
+
+import java.util.*;
+import java.io.*;
+import java.util.function.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -15,21 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Assertions {
 
     public static final double TOLERANCE = 1e-9;
-
-    static void assertEquals(double expect, double result, Supplier<String> msg) {
-        double error = Math.abs(result - expect);
-        if (error <= TOLERANCE) {
-            return;
-        }
-        fail("expect=" + expect + " result=" + result + " error=" + error + " tolerance=" + TOLERANCE + " msg=" + msg.get());
-    }
+    public static final Supplier<String> EMPTY = ()->"";
 
     static void assertEquals(Point a, Point b, Supplier<String> msg) {
         if (a == null || b == null) {
             assertTrue(a == null && b == null,msg);
         } else {
-            assertEquals(a.x, b.x,msg);
-            assertEquals(a.y, b.y,msg);
+            org.junit.jupiter.api.Assertions.assertEquals(a.x, b.x,TOLERANCE,msg);
+            org.junit.jupiter.api.Assertions.assertEquals(a.y, b.y,TOLERANCE,msg);
         }
     }
 

@@ -1,8 +1,7 @@
-package com.github.wmacevoy.biggesttriangle;
+package problem;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 /**
  *
