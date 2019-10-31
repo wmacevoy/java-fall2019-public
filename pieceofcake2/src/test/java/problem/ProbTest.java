@@ -9,45 +9,67 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import java.util.*;
 import java.io.*;
+import java.time.*;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.Instant;
-
-class TestedProb extends Prob {
-
-    static final String EOL = System.lineSeparator();
-
-    String input;
-    String answer;
-    ByteArrayOutputStream baos;
-
-    String output() {
-        return baos.toString(StandardCharsets.UTF_8);
-    }
-
-    TestedProb(String input, String answer) {
-        this.input = input.replace("\n", EOL);
-        this.in = new Scanner(input);
-        this.answer = answer.replace("\n", EOL);
-        this.baos = new ByteArrayOutputStream();
-        this.out = new PrintStream(baos, true, StandardCharsets.UTF_8);
-    }
-
-    boolean inputEqual(Prob to) {
-        return n == to.n && h == to.h && v == to.v;
-    }
-
-    boolean outputEqual(Prob to) {
-        return volume == to.volume;
-    }
-}
 
 public class ProbTest {
 
-    TestedProb ex1() {
+    final String EOL = System.lineSeparator();
+    final double TIME_LIMIT = 1.0;
+
+    class Target extends Prob {
+
+        String input;
+        String answer;
+        ByteArrayOutputStream baos;
+
+        String output() {
+            return baos.toString(StandardCharsets.UTF_8);
+        }
+
+        Target(String input, String answer) {
+            this.input = input.replace("\n", EOL);
+            this.in = new Scanner(input);
+            this.answer = answer.replace("\n", EOL);
+            this.baos = new ByteArrayOutputStream();
+            this.out = new PrintStream(baos, true, StandardCharsets.UTF_8);
+        }
+
+        boolean inputEqual(Prob to) {
+            return n == to.n && h == to.h && v == to.v;
+        }
+
+        boolean outputEqual(Prob to) {
+            return volume == to.volume;
+        }
+
+        double runTime = 0;
+
+        void run() {
+            Instant t0 = Instant.now();
+            super.run();
+            Instant t1 = Instant.now();
+            long nanos = Duration.between(t0, t1).toNanos();
+            runTime = nanos * 1e-9;
+            assertTrue(runTime <= TIME_LIMIT);
+        }
+
+        double solveTime = 0;
+
+        void solve() {
+            Instant t0 = Instant.now();
+            super.solve();
+            Instant t1 = Instant.now();
+            long nanos = Duration.between(t0, t1).toNanos();
+            solveTime = nanos * 1e-9;
+            assertTrue(solveTime <= TIME_LIMIT);
+        }
+    }
+
+    Target ex1() {
         String input = "10 4 7\n";
         String answer = "168\n";
-        TestedProb prob = new TestedProb(input, answer);
+        Target prob = new Target(input, answer);
         prob.n = 10;
         prob.h = 4;
         prob.v = 7;
@@ -55,10 +77,10 @@ public class ProbTest {
         return prob;
     }
 
-    TestedProb ex2() {
+    Target ex2() {
         String input = "5 2 2\n";
         String answer = "36\n";
-        TestedProb prob = new TestedProb(input, answer);
+        Target prob = new Target(input, answer);
         prob.n = 5;
         prob.h = 2;
         prob.v = 2;
@@ -66,10 +88,10 @@ public class ProbTest {
         return prob;
     }
 
-    TestedProb ex3() {
+    Target ex3() {
         String input = "4 2 1\n";
         String answer = "24\n";
-        TestedProb prob = new TestedProb(input, answer);
+        Target prob = new Target(input, answer);
         prob.n = 4;
         prob.h = 2;
         prob.v = 1;
@@ -79,7 +101,7 @@ public class ProbTest {
 
     final int N = 3;
 
-    TestedProb ex(int k) {
+    Target ex(int k) {
         switch (k) {
 
             case 1:
@@ -128,7 +150,7 @@ public class ProbTest {
         prob1.solve();
         Instant t1 = Instant.now();
         long nanos = Duration.between(t0, t1).toNanos();
-        double duration = nanos*1e-9;
+        double duration = nanos * 1e-9;
         assertTrue(prob0.outputEqual(prob1), () -> "k=" + k);
         assertTrue(duration <= TIME_LIMIT);
     }
@@ -140,14 +162,13 @@ public class ProbTest {
         }
     }
 
-    final double TIME_LIMIT = 1.0;
     void testRun(int k) {
         var prob = ex(k);
         Instant t0 = Instant.now();
         prob.run();
         Instant t1 = Instant.now();
         long nanos = Duration.between(t0, t1).toNanos();
-        double duration = nanos*1e-9;
+        double duration = nanos * 1e-9;
         assertEquals(prob.answer, prob.output(), () -> "k=" + k);
         assertTrue(duration <= TIME_LIMIT);
     }
