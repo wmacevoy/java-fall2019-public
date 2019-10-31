@@ -112,6 +112,7 @@ public class Prob {
 
     void solve() {
         maxPerimeter = 0;
+        
         for (int i = 0; i<lines.size(); ++i) {
             for (int j=i+1; j<lines.size(); ++j) {
                 for (int k=j+1; k<lines.size(); ++k) {

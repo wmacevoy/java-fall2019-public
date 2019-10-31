@@ -19,6 +19,8 @@ import org.junit.jupiter.api.*;
 public class PointTest {
     @Test
     public void testDistance() {
+        assertEquals(3.0,new Point(0,0).distance(new Point(3,0)),TOLERANCE);
+        assertEquals(4.0,new Point(0,0).distance(new Point(0,4)),TOLERANCE);
         assertEquals(5.0,new Point(0,0).distance(new Point(3,4)),TOLERANCE);
     }
     

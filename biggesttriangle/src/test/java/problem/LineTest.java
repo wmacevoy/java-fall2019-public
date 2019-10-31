@@ -18,7 +18,7 @@ public class LineTest {
     Point intersect(Line a, Line b) {
         Point ab = (Point) a.intersect(b);
         Point ba = (Point) b.intersect(a);
-        assertEquals(ab, ba, EMPTY);
+        assertEquals(ab, ba, NO_MESSAGE);
         return ab;
     }
 
@@ -28,9 +28,9 @@ public class LineTest {
         Line vert = new Line(new Point(10, 0), new Point(10, 100));
         Line horz = new Line(new Point(0, 7), new Point(-3, 7));
 
-        assertEquals(new Point(10, 20), intersect(diag, vert), EMPTY);
-        assertEquals(new Point(3.5, 7), intersect(diag, horz), EMPTY);
-        assertEquals(new Point(10, 7), intersect(vert, horz), EMPTY);
+        assertEquals(new Point(10, 20), intersect(diag, vert), NO_MESSAGE);
+        assertEquals(new Point(3.5, 7), intersect(diag, horz), NO_MESSAGE);
+        assertEquals(new Point(10, 7), intersect(vert, horz), NO_MESSAGE);
     }
 
     @Test

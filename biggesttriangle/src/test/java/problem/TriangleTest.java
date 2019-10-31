@@ -27,7 +27,7 @@ public class TriangleTest {
         Triangle triangle = new Triangle(alpha,beta,gamma);
         double expResult = 3+4+5;
         double result = triangle.perimeter();
-        assertEquals(expResult, result, TOLERANCE, EMPTY);
+        assertEquals(expResult, result, TOLERANCE, NO_MESSAGE);
     }
     
 }

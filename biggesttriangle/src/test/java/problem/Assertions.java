@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Assertions {
 
     public static final double TOLERANCE = 1e-9;
-    public static final Supplier<String> EMPTY = ()->"";
+    public static final Supplier<String> NO_MESSAGE = ()->"";
 
     static void assertEquals(Point a, Point b, Supplier<String> msg) {
         if (a == null || b == null) {
@@ -33,19 +33,4 @@ public class Assertions {
     static void assertEquals(Line alpha, Line beta, Supplier<String> msg) {
         assertTrue(alpha.intersect(beta) == alpha, msg);
     }
-    
-    static void assertEquals(Iterable<Line> a, Iterable<Line> b, Supplier<String> msg) {
-        var ai = a.iterator();
-        var bi = b.iterator();
-        for (;;) {
-            boolean an = ai.hasNext();
-            boolean bn = bi.hasNext();
-            assertTrue(an == bn,msg);
-            if (an == false) break;
-            var al = ai.next();
-            var bl = bi.next();
-            assertEquals(al,bl,msg);
-        }
-    }
-    
 }
