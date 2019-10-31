@@ -10,7 +10,6 @@ import java.util.*;
 // https://rmc19.kattis.com/problems/biggesttriangle
 
 class Point {
-
     final double x, y;
 
     Point(double x, double y) {
@@ -18,8 +17,8 @@ class Point {
         this.y = y;
     }
 
-    double distance(Point with) {
-        return Math.sqrt(Math.pow(x - with.x, 2) + Math.pow(y - with.y, 2));
+    double distance(Point to) {
+        return Math.sqrt(Math.pow(x - to.x, 2) + Math.pow(y - to.y, 2));
     }
 }
 
@@ -43,20 +42,20 @@ class Line {
         double x2 = b.x;
         double y2 = b.y;
 
-        double xbar1 = with.a.x;
-        double ybar1 = with.a.y;
-        double xbar2 = with.b.x;
-        double ybar2 = with.b.y;
+        double xBar1 = with.a.x;
+        double yBar1 = with.a.y;
+        double xBar2 = with.b.x;
+        double yBar2 = with.b.y;
 
-        double deltax = x2 - x1;
-        double deltabarx = xbar2 - xbar1;
-        double deltay = y2 - y1;
-        double deltabary = ybar2 - ybar1;
-        double dx = xbar1 - x1;
-        double dy = ybar1 - y1;
+        double deltaX = x2 - x1;
+        double deltaXBar = xBar2 - xBar1;
+        double deltaY = y2 - y1;
+        double deltaYBar = yBar2 - yBar1;
+        double dx = xBar1 - x1;
+        double dy = yBar1 - y1;
 
-        double d = deltax * deltabary - deltabarx * deltay;
-        double td = (deltabary * dx - deltabarx * dy);
+        double d = deltaX * deltaYBar - deltaXBar * deltaY;
+        double td = (deltaYBar * dx - deltaXBar * dy);
 
         if (d == 0) {
             if (td == 0) {

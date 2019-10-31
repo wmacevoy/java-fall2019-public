@@ -24,18 +24,18 @@ public class ProbTest {
 
         String input;
         String answer;
-        ByteArrayOutputStream baos;
+        ByteArrayOutputStream buffer;
 
         String output() {
-            return baos.toString(StandardCharsets.UTF_8);
+            return buffer.toString(StandardCharsets.UTF_8);
         }
 
         Target(String input, String answer) {
             this.input = input.replace("\n", EOL);
             this.in = new Scanner(input);
             this.answer = answer.replace("\n", EOL);
-            this.baos = new ByteArrayOutputStream();
-            this.out = new PrintStream(baos, true, StandardCharsets.UTF_8);
+            this.buffer = new ByteArrayOutputStream();
+            this.out = new PrintStream(buffer, true, StandardCharsets.UTF_8);
         }
 
         boolean inputEqual(Prob to) {
