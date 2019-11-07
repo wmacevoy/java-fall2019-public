@@ -23,3 +23,15 @@
 hs_err_pid*
 /hello/nbproject/
 /hello/target/
+/billiard/nbproject/
+/billiard/target/
+/strings/target/
+/strings/nbproject/
+/collections/target/
+/threads/nbproject/
+/threads/target/
+/sqlite/target/
+/sqlite/nbproject/
+/biggesttriangle/nbproject/
+/biggesttriangle/target/
+/pieceofcake2/target/
