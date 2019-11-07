@@ -8,27 +8,43 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
+
+import static com.example.android1.Utils.*;
 
 public class MainActivity extends AppCompatActivity {
+    Toolbar toolbar;
+    FloatingActionButton sendmailFloatingActionButton;
+    TextView mainTextView;
+    Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        sendmailFloatingActionButton = findViewById(R.id.sendmailFloatingActionButton);
+        sendmailFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                info("clicked sendmail");
+                mainTextView.setText("mail sent.");
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
             }
         });
+
+        mainTextView = findViewById(R.id.mainTextView);
+        cancelButton = findViewById(R.id.cancelButton);
+        info("created.");
     }
 
     @Override
@@ -51,5 +67,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onCancelButtonClick(View me) {
+        info("cancel clicked.");
     }
 }
