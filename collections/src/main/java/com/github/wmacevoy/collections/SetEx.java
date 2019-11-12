@@ -17,12 +17,15 @@ import java.util.TreeMap;
 
 
 class SlowCacheKey implements Comparable<SlowCacheKey> {
-    String a;
-    int b;
+    final String a;
+    final int b;
+    final int hash;
 
     SlowCacheKey(String a, int b) {
         this.a = a;
         this.b = b;
+        this.hash = (a + ":" + b).hashCode();
+
     }
     @Override
     public int compareTo(SlowCacheKey to) {
@@ -39,6 +42,11 @@ class SlowCacheKey implements Comparable<SlowCacheKey> {
     public boolean equals(Object object) {
         return compareTo((SlowCacheKey) object) == 0;
     }
+    
+   @Override
+   public int hashCode() {
+       return hash;
+   }
 }
 public class SetEx {
     PrintStream out = System.out;
